@@ -75,7 +75,9 @@ class TransaksiController extends Controller
      */
     public function edit(Transaksi $transaksi)
     {
-        return view('transaksi.edit',compact('transaksi'));
+        $list_pelanggan = Pelanggan::all()->pluck('nama_lengkap','id');
+        $list_gedung = Gedung::all()->pluck('nama_gedung','id');
+        return view('transaksi.edit',compact('transaksi','list_pelanggan','list_gedung'));
         //
     }
 
@@ -84,16 +86,28 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, transaksi $transaksi): RedirectResponse
     {
-         request()->validate([
+        request()->validate([
             'id_pelanggan' => 'required',
             'id_gedung' => 'required',
             'tanggal' => 'required',
             'jam_masuk' => 'required',
             'jumlah_jam' => 'required',
-            'total_pembayaran' => 'required',
+            'keterangan' => 'required',
         ]);
     
-        $transaksi->update($request->all());
+        $gedung = Gedung::find($request->input('id_gedung'));
+        $total_pembayaran = $gedung->tarif*$request->input('jumlah_jam');
+        $transaksi->update([
+            'id_pelanggan' => $request->input('id_pelanggan'),
+            'id_gedung' => $request->input('id_gedung'),
+            'tanggal' => $request->input('tanggal'),
+            'jam_masuk' => $request->input('jam_masuk'),
+            'jumlah_jam' => $request->input('jumlah_jam'),
+            'total_pembayaran' => $total_pembayaran,
+            'keterangan' => $request->input('keterangan'),
+        ]);
+    
+        // $transaksi->update($request->all());
     
         return redirect()->route('transaksis.index')
                         ->with('success','transaksi updated successfully');

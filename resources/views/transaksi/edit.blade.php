@@ -5,7 +5,7 @@
       <div class="container">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0"> <b>pelanggans</b> <small><i class="text-primary">List</i></small></h1>
+            <h1 class="m-0"> <b>Transaksi</b> <small><i class="text-primary">Edit</i></small></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -27,7 +27,7 @@
                 <div class="row mb-3">
                     <div class="col-lg-12 margin-tb">
                         <div class="pull-right">
-                            <a class="btn btn-primary" href="{{ route('pelanggans.index') }}"> Back</a>
+                            <a class="btn btn-primary" href="{{ route('transaksis.index') }}"> Back</a>
                         </div>
                     </div>
                 </div>
@@ -41,42 +41,44 @@
                     </ul>
                 </div>
                 @endif
-                {!! Form::model($pelanggan, ['method' => 'PATCH','route' => ['pelanggans.update', $pelanggan->id]]) !!}
+                {!! Form::model($transaksi, ['method' => 'PATCH','route' => ['transaksis.update', $transaksi->id]]) !!}
 
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <strong>NIK:</strong>
-                            {!! Form::number('nik', $pelanggan->nik, array('placeholder' => 'NIK','class' => 'form-control')) !!}
+                            <strong>Pelanggan :</strong>
+                            {!! Form::select('id_pelanggan', $list_pelanggan, $transaksi->id_pelanggan, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <strong>Nama Lengkap:</strong>
-                            {!! Form::text('nama_lengkap', $pelanggan->nama_lengkap, array('placeholder' => 'Nama Lengkap','class' => 'form-control')) !!}
+                            <strong>Gedung :</strong>
+                            {!! Form::select('id_gedung', $list_gedung, $transaksi->id_gedung, ['class' => 'form-control']) !!}
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <strong>Jenis Kelamin:</strong>
-                            <select name="jenis_kelamin" class="form-control">
-                              <option value>Pilih</option>
-                              <option value="Laki-laki" {{ $pelanggan->jenis_kelamin == "Laki-laki" ? "selected":"" }}>Laki-laki</option>
-                              <option value="Perempuan" {{ $pelanggan->jenis_kelamin == "Perempuan" ? "selected":"" }}>Perempuan</option>
-                            </select>
+                            <strong>Tanggal:</strong>
+                            {!! Form::date('tanggal', $transaksi->tanggal, array('class' => 'form-control')) !!}
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <strong>Alamat Lengkap:</strong>
-                            {!! Form::textarea('alamat', $pelanggan->alamat, array('placeholder' => 'Alamat Lengkap','class' => 'form-control', 'rows' => 3)) !!}
+                            <strong>Jam Masuk:</strong>
+                            {!! Form::time('jam_masuk', $transaksi->jam_masuk, array('class' => 'form-control')) !!}
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
-                            <strong>No. Tlp:</strong>
-                            {!! Form::number('no_tlp', $pelanggan->no_tlp, array('placeholder' => 'No. Tlp','class' => 'form-control')) !!}
+                            <strong>Jumlah Jam:</strong>
+                            {!! Form::number('jumlah_jam', $transaksi->jumlah_jam, array('class' => 'form-control')) !!}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Keterangan:</strong>
+                            {!! Form::textarea('keterangan', $transaksi->keterangan, array('placeholder' => 'Alamat Lengkap','class' => 'form-control', 'rows' => 3)) !!}
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
